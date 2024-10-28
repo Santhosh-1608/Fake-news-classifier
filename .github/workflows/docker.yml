@@ -51,8 +51,8 @@ jobs:
       - name: Push Docker image to Docker Hub (optional)
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          docker tag fake-news-predictor yourusername/fake-news-predictor:latest
-          docker push yourusername/fake-news-predictor:latest
+          docker tag fake-news-predictor santhosh168/fake-news-predictor:latest
+          docker push santhosh168/fake-news-predictor:latest
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
