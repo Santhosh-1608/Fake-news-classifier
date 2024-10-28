@@ -1,0 +1,5 @@
+jupyter_project/TEST_PREDICTIONS.csv filter=lfs diff=lfs merge=lfs -text
+jupyter_project/pipeline.pkl filter=lfs diff=lfs merge=lfs -text
+pickle/pipeline.pkl filter=lfs diff=lfs merge=lfs -text
+*.pkl filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text

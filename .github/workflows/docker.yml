@@ -1,0 +1,58 @@
+name: Fake-news-detection
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch if necessary
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:  # Example for database service if needed
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Docker image
+        run: |
+          docker build -t fake-news-predictor .
+
+      - name: Run tests
+        run: |
+          # Add your test command here. For example:
+          # python -m unittest discover
+          echo "Running tests..."
+          # If you have tests, you can add the command here
+          
+      - name: Push Docker image to Docker Hub (optional)
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          docker tag fake-news-predictor yourusername/fake-news-predictor:latest
+          docker push yourusername/fake-news-predictor:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
